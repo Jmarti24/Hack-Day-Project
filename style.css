@@ -1,0 +1,12 @@
+body {
+    text-align: center;
+    background-image: linear-gradient(red, yellow);
+    color: limegreen;
+    font-family: 'Press Start 2P', cursive;
+    height: 100vh;
+}
+
+h1 {
+  border: dotted 2px limegreen;
+  padding: 10px;
+}
