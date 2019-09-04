@@ -15,6 +15,7 @@ var Engine = (function (global) {
 
   canvas.width = 505;
   canvas.height = 606;
+
   doc.body.appendChild(canvas);
 
   /* This function serves as the kickoff point for the game loop itself
@@ -74,6 +75,7 @@ var Engine = (function (global) {
       enemy.update(dt);
     });
     player.update();
+    collectable.update();
   }
 
   /* This function initially draws the "game level", it will then call
@@ -84,12 +86,12 @@ var Engine = (function (global) {
      * for that particular row of the game level.
      */
     var rowImages = [
-        "images/water-block.png",   // Top row is water
-        "images/stone-block.png",   // Row 1 of 3 of stone
-        "images/stone-block.png",   // Row 2 of 3 of stone
-        "images/stone-block.png",   // Row 3 of 3 of stone
-        "images/grass-block.png",   // Row 1 of 2 of grass
-        "images/grass-block.png"    // Row 2 of 2 of grass
+        "images/grass-block-brown.png",   // Top row is water
+        "images/stone-block-bad.png",   // Row 1 of 3 of stone
+        "images/stone-block-bad.png",   // Row 2 of 3 of stone
+        "images/stone-block-bad.png",   // Row 3 of 3 of stone
+        "images/stone-block-bad.png",   // Row 1 of 2 of grass
+        "images/grass-block-brown.png"    // Row 2 of 2 of grass
       ],
       numRows = 6,
       numCols = 5,
@@ -128,15 +130,21 @@ var Engine = (function (global) {
     });
 
     player.render();
+    collectable.render();
   }
 
   //Images used in game
   Resources.load([
     "images/stone-block.png",
+    "images/stone-block-bad.png",
     "images/water-block.png",
     "images/grass-block.png",
+    "images/grass-block-brown.png",
     "images/enemy-bug.png",
+    "images/enemy-bug-green.png",
     "images/char-boy.png",
+    "images/char-pink-girl_gasmask.png",
+    "images/Gem-Green.png",
     "images/Star.png"
   ]);
   Resources.onReady(init);
