@@ -1,4 +1,6 @@
-Parent object for sprites
+// const scoreboard = document.getElementById('scoreboard');
+
+//Parent object for sprites
 class Populate {
   constructor () {
     this.x = 0;
@@ -19,14 +21,32 @@ class Populate {
   }
 }
 
+class Collectable extends Populate {
+    constructor () {
+    super();
+    this.x = 200;
+    this.y = 200;
+    this.sprite = "images/Gem-Green.png";
+  }
+    update () {
+
+
+  }
+}
+
 //Player class
 class Player extends Populate {
+
   constructor () {
     super();
     this.x = 0;
     this.y = 415;
-    this.sprite = "images/char-boy.png";
+    this.score = 0;
+    this.health = 3;
+    this.sprite = "images/char-pink-girl_gasmask.png";
   }
+
+
 
 //key input for Player
   handleInput (input) {
@@ -56,8 +76,24 @@ class Player extends Populate {
 
   //updates player and sets condition for collision & win
   update () {
+    if (60 > Math.abs(this.y - collectable.y) && 60 > Math.abs(this.x - collectable.x)) {
+        collectable.y = Math.random() * (425 - 0) + 1;
+        collectable.x = Math.random() * (425 - 0) + 1;
+        this.score += 1;
+        if(this.score >= 10)
+        {
+            alert("You saved " + this.score + " babies!");
+            window.location.reload(true);
+        }
+    }
     for (let enemy of allEnemies) {
       if (this.y === enemy.y && (enemy.x + enemy.sideways / 2 > this.x && enemy.x < this.x + this.sideways / 2)) {
+        this.health -= 1;
+        if (this.health === 0) {
+          alert("Done did die!!");
+          window.location.reload(true);
+        }
+        alert("You lost a life! You have " + this.health + " left!");
         this.reset();
       }
     }
@@ -65,9 +101,18 @@ class Player extends Populate {
 }
 
 const player = new Player();
+const collectable = new Collectable();
 
 //Array to hold Enemy objects
 const allEnemies = [];
+
+
+
+// scoreboard code - FOR VERSION 2.0
+// function myFunction() {
+//   scoreboard.innerHTML = "You\'ve collected " + this.score + " out of 10. You have " + this.health + " health left!";
+// }
+
 
 //Enemy class
 class Enemy extends Populate {
@@ -76,7 +121,7 @@ class Enemy extends Populate {
     this.x = x;
     this.y = y;
     this.speed = speed;
-    this.sprite = "images/enemy-bug.png";
+    this.sprite = "images/enemy-bug-green.png";
     this.enemySprite = this.sprite;
   }
 
@@ -91,11 +136,12 @@ class Enemy extends Populate {
 }
 
 const enemy1 = new Enemy(101, 83, 150);
-const enemy2 = new Enemy(404, 166, 350);
-const enemy3 = new Enemy(0, 249, 375);
+const enemy2 = new Enemy(404, 166, 150);
+const enemy3 = new Enemy(0, 249, 200);
 const enemy4 = new Enemy(0, 83, 100);
+const enemy5 = new Enemy(0, 332, 100);
 
-allEnemies.push(enemy1, enemy2, enemy3, enemy4);
+allEnemies.push(enemy1, enemy2, enemy3, enemy4, enemy5);
 
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener("keyup", function (e) {
@@ -108,3 +154,5 @@ document.addEventListener("keyup", function (e) {
 
   player.handleInput(allowedKeys[e.keyCode]);
 });
+
+//testing
